@@ -1,0 +1,67 @@
+.dashboard-container {
+  padding: 2rem 1rem;
+  max-width: 1100px;
+  margin: auto;
+}
+
+/* Header */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+/* Stat cards */
+.stat-card {
+  border: none;
+  border-radius: 16px;
+  color: #fff;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+.stat-success {
+  background: linear-gradient(135deg, #28a745, #5ddf89);
+}
+
+.stat-primary {
+  background: linear-gradient(135deg, #0d6efd, #6ea8fe);
+}
+
+.stat-dark {
+  background: linear-gradient(135deg, #343a40, #6c757d);
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  opacity: 0.9;
+  margin-bottom: 0.25rem;
+}
+
+/* Progress card */
+.progress-card {
+  border-radius: 16px;
+  border: none;
+}
+
+.progress {
+  height: 10px;
+  border-radius: 10px;
+}
+
+/* Action cards */
+.action-card {
+  border-radius: 16px;
+  border: none;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.action-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+}

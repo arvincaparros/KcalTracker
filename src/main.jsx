@@ -1,12 +1,15 @@
+import 'bootstrap/dist/css/bootstrap.min.css'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import { BrowserRouter } from 'react-router-dom'
 import './index.css'
 import App from './App.jsx'
-import CssBaseline from "@mui/material/CssBaseline"; // normalize CSS
-import { ThemeProvider, createTheme } from "@mui/material/styles";
+
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </StrictMode>,
 )
