@@ -1,12 +1,46 @@
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './Dashboard.css'
 
 export default function Dashboard( {user, onLogout}) {
   const dailyGoal = 2000
-  const consumed = 1450
-  const remaining = dailyGoal - consumed
-  const progress = Math.round((consumed / dailyGoal) * 100)
+  const [consumed, setConsumed] = useState(0)
+  const [loading, setLoading] = useState(true)
   const navigate = useNavigate()
+
+  useEffect(() => {
+    const fetchTodayCalories = async () => {
+      const token = localStorage.getItem('token')
+
+      try {
+        const res = await fetch(
+          'https://localhost:7016/api/FoodEntries/today-total',
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+
+        if (!res.ok) throw new Error('Failed to load calories')
+
+        const data = await res.json()
+        setConsumed(data)
+      } catch (err) {
+        console.error(err)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchTodayCalories()
+  }, [])
+
+  const remaining = Math.max(dailyGoal - consumed, 0)
+  const progress = Math.min(
+    Math.round((consumed / dailyGoal) * 100),
+    100
+  )
 
   return (
     <div className="dashboard-container">
@@ -52,8 +86,7 @@ export default function Dashboard( {user, onLogout}) {
             </div>
             </div>
         </div>
-        </div>
-
+      </div>
 
       {/* Progress */}
       <div className="card progress-card shadow mb-4">
@@ -95,7 +128,7 @@ export default function Dashboard( {user, onLogout}) {
               <p className="text-muted small mb-3">
                 View previous calorie logs
               </p>
-              <button className="btn btn-outline-success w-100">
+              <button className="btn btn-outline-success w-100" onClick={() => navigate('/history')}>
                 View History
               </button>
             </div>

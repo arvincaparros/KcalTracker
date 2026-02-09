@@ -18,17 +18,38 @@ export default function AddFood() {
     setError('')
     setLoading(true)
 
-    // UI only for now
-    console.log({
-      foodName,
-      calories,
-      date,
-    })
+    const token = localStorage.getItem('token')
 
-    setTimeout(() => {
-      setLoading(false)
+    try {
+      const response = await fetch(
+        'https://localhost:7016/api/FoodEntries/AddEntry',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            foodName,
+            calories: Number(calories),
+            date,
+          }),
+        }
+      )
+
+
+      if (!response.ok) {
+        const message = await response.text()
+        throw new Error(message || 'Failed to save food entry')
+      }
+
+      // success
       navigate('/dashboard')
-    }, 800)
+    } catch (err) {
+      setError(err.message || 'Something went wrong')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (

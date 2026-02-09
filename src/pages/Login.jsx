@@ -1,11 +1,14 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import './Login.css'
+
 
 export default function Login({ onLoginSuccess }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -95,6 +98,17 @@ export default function Login({ onLoginSuccess }) {
                         </button>
                     </form>
                 </div>
+
+                <span
+                    role="button"
+                    tabIndex={0}
+                    className="text-primary cursor-pointer text-decoration-none"
+                    onClick={() => navigate('/create-account')}
+                    onKeyDown={(e) => e.key === 'Enter' && navigate('/create-account')}
+                    >
+                    Create an Account
+                </span>
+
 
                 <div className="card-footer text-center text-muted small mt-3">
                 &copy; {new Date().getFullYear()} Kcal Tracker • Track calories, track progress

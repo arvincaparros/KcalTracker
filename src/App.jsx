@@ -4,6 +4,8 @@ import './App.css'
 import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
 import AddFood from './pages/AddFood'
+import FoodHistory from './pages/FoodHistory'
+import CreateAccount from './pages/CreateAccount'
 
 function App() {
   const [user, setUser] = useState(null)
@@ -41,6 +43,20 @@ function App() {
         path="/add-food"
         element={
           user ? <AddFood /> : <Navigate to="/login" />
+        }
+      />
+
+       <Route
+        path="/history"
+        element={
+          user ? <FoodHistory /> : <Navigate to="/login" />
+        }
+      />
+
+       <Route
+        path="/create-account"
+        element={
+          !user ? <CreateAccount /> : <Navigate to="/dashboard" />
         }
       />
 
