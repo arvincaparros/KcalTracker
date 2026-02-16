@@ -107,7 +107,7 @@ export default function Dashboard( {user, onLogout}) {
 
       {/* Quick Actions */}
       <div className="row g-4">
-        <div className="col-md-6">
+        <div className="col-md-4">
           <div className="card shadow action-card">
             <div className="card-body">
               <h6 className="fw-bold">Add Food</h6>
@@ -121,7 +121,21 @@ export default function Dashboard( {user, onLogout}) {
           </div>
         </div>
 
-        <div className="col-md-6">
+        <div className="col-md-4">
+          <div className="card shadow action-card">
+            <div className="card-body">
+              <h6 className="fw-bold">Update Entries</h6>
+                <p className="text-muted small mb-3">
+                  Edit or remove your existing logs
+                </p>
+                <button className="btn btn-warning w-100" onClick={() => navigate('/manage-entries')}>
+                  Manage Entries
+                </button>
+            </div>
+          </div>
+        </div>
+
+        <div className="col-md-4">
           <div className="card shadow action-card">
             <div className="card-body">
               <h6 className="fw-bold">History</h6>

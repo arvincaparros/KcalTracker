@@ -18,6 +18,8 @@
   border-radius: 16px;
   color: #fff;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  min-height: 160px;
+  text-align: center;
 }
 
 .stat-card:hover {
@@ -47,6 +49,7 @@
 .progress-card {
   border-radius: 16px;
   border: none;
+  min-height: 100px;
 }
 
 .progress {
@@ -59,6 +62,7 @@
   border-radius: 16px;
   border: none;
   transition: box-shadow 0.2s ease, transform 0.2s ease;
+  min-height: 170px;
 }
 
 .action-card:hover {

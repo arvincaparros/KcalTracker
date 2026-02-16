@@ -6,6 +6,7 @@ import Dashboard from './pages/Dashboard'
 import AddFood from './pages/AddFood'
 import FoodHistory from './pages/FoodHistory'
 import CreateAccount from './pages/CreateAccount'
+import ManageEntries from './pages/ManageEntries'
 
 function App() {
   const [user, setUser] = useState(null)
@@ -43,6 +44,13 @@ function App() {
         path="/add-food"
         element={
           user ? <AddFood /> : <Navigate to="/login" />
+        }
+      />
+
+      <Route
+        path="/manage-entries"
+        element={
+          user ? <ManageEntries /> : <Navigate to="/login" />
         }
       />
 

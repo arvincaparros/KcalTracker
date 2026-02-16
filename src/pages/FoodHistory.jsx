@@ -2,8 +2,11 @@ import { useEffect, useState } from 'react'
 
 export default function FoodHistory() {
   const [entries, setEntries] = useState([])
+  const [filteredEntries, setFilteredEntries] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const [fromDate, setFromDate] = useState('')
+  const [toDate, setToDate] = useState('')
 
   useEffect(() => {
     const fetchEntries = async () => {
@@ -24,6 +27,7 @@ export default function FoodHistory() {
 
         const data = await response.json()
         setEntries(data)
+        setFilteredEntries(data)
       } catch (err) {
         setError(err.message)
       } finally {
@@ -33,6 +37,31 @@ export default function FoodHistory() {
 
     fetchEntries()
   }, [])
+
+  // 🔍 Date filter logic
+ useEffect(() => {
+  let result = [...entries]
+
+  if (fromDate) {
+    const from = new Date(fromDate)
+    from.setHours(0, 0, 0, 0)
+
+    result = result.filter(e =>
+      new Date(e.date) >= from
+    )
+  }
+
+  if (toDate) {
+    const to = new Date(toDate)
+    to.setHours(23, 59, 59, 999) // 🔥 key fix
+
+    result = result.filter(e =>
+      new Date(e.date) <= to
+    )
+  }
+
+  setFilteredEntries(result)
+}, [fromDate, toDate, entries])
 
   if (loading)
     return <p className="text-center mt-4">Loading history...</p>
@@ -45,17 +74,45 @@ export default function FoodHistory() {
     )
 
   return (
-    <div className="py-4 px-4">
+    <div className="container-fluid py-4 px-5">
       {/* Header */}
-      <div className="d-flex justify-content-between align-items-center mb-3">
-        <h4 className="fw-bold mb-0">Food History</h4>
-        <span className="text-muted small">
-          {entries.length} entries
-        </span>
+      <div className="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+  <h4 className="fw-bold mb-0">Food History</h4>
+
+  <div className="d-flex flex-wrap align-items-end gap-3">
+    <div>
+      <label className="form-label small fw-semibold mb-1">
+        Start Date
+      </label>
+      <input
+        type="date"
+        className="form-control"
+        value={fromDate}
+        onChange={e => setFromDate(e.target.value)}
+      />
+    </div>
+
+    <div>
+      <label className="form-label small fw-semibold mb-1">
+        End Date
+      </label>
+      <input
+        type="date"
+        className="form-control"
+        value={toDate}
+        onChange={e => setToDate(e.target.value)}
+      />
+    </div>
+  </div>
+</div>
+
+
+      <div className="text-muted small mb-2">
+        {filteredEntries.length} entries
       </div>
 
-      {entries.length === 0 ? (
-        <p className="text-muted">No food entries yet.</p>
+      {filteredEntries.length === 0 ? (
+        <p className="text-muted">No food entries found.</p>
       ) : (
         <div className="card border-0 shadow-sm rounded-4">
           <div className="table-responsive">
@@ -69,15 +126,13 @@ export default function FoodHistory() {
               </thead>
 
               <tbody>
-                {entries.map((item) => (
+                {filteredEntries.map(item => (
                   <tr key={item.id}>
                     <td className="ps-4 fw-semibold">
                       {new Date(item.date).toLocaleDateString()}
                     </td>
-                    <td>
-                      <div className="fw-medium">
-                        {item.foodName}
-                      </div>
+                    <td className="fw-medium">
+                      {item.foodName}
                     </td>
                     <td className="text-end pe-4 fw-semibold">
                       {item.calories} kcal

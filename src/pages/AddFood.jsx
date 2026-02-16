@@ -55,7 +55,7 @@ export default function AddFood() {
   return (
     <div className="container py-5">
       <div className="row justify-content-center">
-    
+        <div className="col-12 col-md-8 col-lg-6 col-xl-5">
           <div className="card shadow-lg border-0 rounded-4">
             <div className="card-body p-4">
               <h4 className="fw-bold mb-1">Add Food</h4>
@@ -139,6 +139,7 @@ export default function AddFood() {
           <div className="text-center text-muted small mt-3">
             Calories are saved under your account
           </div>
+        </div>
       </div>
     </div>
   )
